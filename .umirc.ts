@@ -56,6 +56,13 @@ const config: IConfig = {
       },
     ],
   ],
+  proxy: {
+    '/api': {
+      target: 'http://155.94.151.5:7001',
+      pathRewrite: { '^/api': '' },
+      changeOrigin: true,
+    },
+  },
 };
 
 export default config;

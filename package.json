@@ -14,7 +14,8 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "umi-request": "^1.2.19"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
