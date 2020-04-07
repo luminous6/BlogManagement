@@ -45,7 +45,7 @@ const BasicLayout: React.FC = props => {
     <div className={styles.normal}>
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsed={collapsed} onCollapse={onCollapse}>
-          <div className={styles.logo}>logo</div>
+          <div className={styles.logo}></div>
           <Menu theme="dark" defaultSelectedKeys={['/index']} mode="inline">
             {renderLayouts(layoutsData)}
             {/* {renderNav(layoutsData[0])} */}
