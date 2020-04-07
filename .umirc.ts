@@ -1,5 +1,5 @@
 import { IConfig } from 'umi-types';
-import routes from './router';
+// import { routes } from './router';
 
 // ref: https://umijs.org/config/
 const config: IConfig = {
@@ -8,10 +8,21 @@ const config: IConfig = {
     {
       path: '/',
       component: '../layouts/index',
+      title: '博客管理',
       routes: [
-        { path: '/index', component: '../pages/index' },
         {
-          path: '/blog',
+          path: '/',
+          component: '../pages/index',
+          title: '博客首页',
+        },
+        {
+          path: '/index',
+          component: '../pages/index',
+          title: '博客首页',
+        },
+        {
+          title: '添加博客',
+          path: '/addBlog',
           component: '../pages/blog/index',
         },
       ],

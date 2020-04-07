@@ -2,4 +2,9 @@
 .normal {
   font-family: Arial, Helvetica, sans-serif, sans-serif;
 }
+.logo {
+  height: 50px;
+  background: #001529;
+  color: #fff
+}
 

@@ -1,61 +1,60 @@
 import React, { useState } from 'react';
 import styles from './index.css';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { GithubOutlined } from '@ant-design/icons';
+import { GithubOutlined, DownOutlined } from '@ant-design/icons';
 import router from 'umi/router';
+import layoutsData from './data';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const BasicLayout: React.FC = props => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
+  // 渲染一级菜单
+  const renderNav = (data: any) => (
+    <Menu.Item key={data.path} onClick={handleClickItem}>
+      <span>{data.title}</span>
+    </Menu.Item>
+  );
+  // 渲染二级菜单
+  const renderSubNav = (data: any) => (
+    <SubMenu
+      key={data.key}
+      title={
+        <span>
+          <span>{data.title}</span>
+        </span>
+      }
+    >
+      {data.subMenu ? data.subMenu.map((item: any, index: number) => renderNav(item)) : ''}
+    </SubMenu>
+  );
+
+  const renderLayouts = (layoutsData: any) =>
+    layoutsData.map((item: any, index: number) => {
+      return item.noSubmenu ? renderNav(item) : renderSubNav(item);
+    });
+
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
   };
   const handleClickItem = (arg: any) => {
-    router.push('/blog')
+    router.push(arg.key);
   };
-  const handleClickIndex = () => {
-    router.push('/index')
-  }
   return (
     <div className={styles.normal}>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-          <div className="logo" >logo</div>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" onClick={handleClickIndex}>
-              <span>首页</span>
-            </Menu.Item>
-
-            <SubMenu
-              key="sub1"
-              title={
-                <span>
-                  <span>博客管理</span>
-                </span>
-              }
-            >
-              <Menu.Item key="3" onClick={handleClickItem}>
-                添加博客
-              </Menu.Item>
-              <Menu.Item key="4">查看博客</Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={
-                <span>
-                  <span>Team</span>
-                </span>
-              }
-            >
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
-            </SubMenu>
+        <Sider collapsed={collapsed} onCollapse={onCollapse}>
+          <div className={styles.logo}>logo</div>
+          <Menu theme="dark" defaultSelectedKeys={['/index']} mode="inline">
+            {renderLayouts(layoutsData)}
+            {/* {renderNav(layoutsData[0])} */}
+            {/* {renderSubNav(layoutsData[1])} */}
           </Menu>
         </Sider>
+
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }} />
+          <Header className="site-layout-background" style={{ padding: 0,background:'#fff' }} />
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
