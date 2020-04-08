@@ -25,6 +25,11 @@ const config: IConfig = {
           path: '/addBlog',
           component: '../pages/addBlog/index',
         },
+        {
+          title: '查看博客',
+          path: '/queryBlog',
+          component: '../pages/viewBlog/index',
+        }
       ],
     },
     // ...routes,
