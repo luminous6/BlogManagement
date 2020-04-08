@@ -1,18 +1,20 @@
 import { extend } from "umi-request";
 import { message } from 'antd';
 const request = extend({
-  prefix: "http://155.94.151.5:7001",
+  prefix: 'http://127.0.0.1:8000/api',
   timeout: 1000,
   headers: {
-    "Content-Type": "multipart/form-data"
+    'Content-Type': 'application/json',
   },
   params: {
     // token: "xxx" // 所有请求默认带上 token 参数
   },
   errorHandler: function(error) {
     /* 异常处理 */
-     message.error(error);
-  }
+    console.log(error);
+
+    message.error('网络异常');
+  },
 });
 
 

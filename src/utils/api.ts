@@ -5,3 +5,12 @@ export const queryBlog = async () => {
   console.log(ret)
   return ret;
 };
+export const addBlog = async (data: any) => {
+  const ret = await request('/addBlog', {
+    method: 'post',
+    data,
+  });
+  console.log(ret);
+
+  return ret;
+}
