@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './index.less';
-import { queryBlog } from '@/utils/api';
-import { Table, Tag, Button } from 'antd';
+import { queryBlog, delBlogById } from '@/utils/api';
+import { Table, Tag, Button, Modal, message } from 'antd';
 import { getRandomColor, transformTime } from '@/utils/util';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
+
 export default function index() {
   const [blogData, setBlogData] = useState([]);
   const columns = [
@@ -52,7 +55,7 @@ export default function index() {
           <Button size="small" type="primary">
             编辑
           </Button>{' '}
-          <Button size="small" danger type="primary">
+          <Button onClick={() => handleClickDelBlog(text.id)} size="small" danger type="primary">
             删除
           </Button>
         </span>
@@ -88,6 +91,31 @@ export default function index() {
   const fetchData = async () => {
     const ret = await queryBlog();
     setBlogData(ret.data);
+  };
+  // 删除博客
+  const handleClickDelBlog = (id: string | number) => {
+    confirm({
+      title: 'Are you sure delete this Blog?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Delete after unable to restore!',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        delBlogById(id).then((res) => {
+          if (res.status === 200) {
+            message.success('删除博客成功！');
+            const temp = blogData.filter((item: any, index: number) => item.id !== id);
+            setBlogData(temp);
+          } else {
+            message.error('删除博客失败！');
+          }
+        });
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   };
   return (
     <div className={styles[`view-blog-page`]}>

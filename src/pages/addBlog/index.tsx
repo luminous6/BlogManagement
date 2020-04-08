@@ -4,11 +4,15 @@ import { queryBlog, addBlog } from '@/utils/api';
 export default function index() {
   useEffect(()=> {
     // queryBlog()
-    // addBlog({
-    //   title: '哈哈哈标题',
-    //   content: 'hhhhhhhhhhhhh 博客正文',
-    //   tags: '散文，诗集'
-    // })
+    const myDate = new Date();
+    const hour = myDate.getHours();
+    const min = myDate.getMinutes();
+    const sec = myDate.getSeconds();
+    addBlog({
+      title: `标题 当前时间${hour}:${min}:${sec}`,
+      content: 'hhhhhhhhhhhhh 博客正文',
+      tags: '散文，诗集',
+    });
   }, [])
 
   return (
