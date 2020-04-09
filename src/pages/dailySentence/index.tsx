@@ -3,10 +3,12 @@ import styles from './index.less';
 import { Table, Tag, Button, Modal, message, Spin, Form, Input, InputNumber } from 'antd';
 import { queryAllDailySentence, delSentenceById } from '@/utils/api';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import AddSentence from '@/components/addSentence';
 const { confirm } = Modal;
 export default function index() {
   const [sentenceData, setSentenceData] = useState([]);
   const [visible, setVisible] = useState<boolean>(false);
+  const [loadding, setLoading] = useState<boolean>(true);
   // 修改句子时的数据
   const [tempSentence, setTempSentence] = useState<any>({});
   const columns = [
@@ -90,6 +92,10 @@ export default function index() {
   const fetchData = async () => {
     const res = await queryAllDailySentence();
     setSentenceData(res.data);
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+    // setLoading(false);
   };
   // 删除句子
   const handleClickDelSentence = (id: string | number) => {
@@ -124,10 +130,22 @@ export default function index() {
 
   return (
     <div className={styles[`daily-sentence-page`]}>
-      <div>
-        <Table columns={columns} dataSource={sentenceData} />
+      {/* 添加句子 */}
+      <div className={styles[`add-sentence-wrap`]}>
+        {' '}
+        <AddSentence />
       </div>
-
+      {/* 表格 */}
+      <div>
+        <div style={{ display: loadding ? 'block' : 'none' }} className={styles.loading}>
+          <Spin size="large" />
+        </div>
+        <Table
+          style={{ display: loadding ? 'none' : 'block' }}
+          columns={columns}
+          dataSource={sentenceData}
+        />
+      </div>
       <div>
         <Modal
           title="修改每日一句"
@@ -154,7 +172,7 @@ export default function index() {
               <Input
                 defaultValue={tempSentence.author ? tempSentence.author : ''}
                 value={tempSentence.author}
-                onChange={()=> {
+                onChange={() => {
                   console.log(tempSentence.author);
                 }}
               />
