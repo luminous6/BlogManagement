@@ -28,19 +28,8 @@ const layoutsData = [
   {
     title: '每日一句',
     key: '5',
-    noSubmenu: false,
-    subMenu: [
-      {
-        title: '新增句子',
-        key: '6',
-        path: '/addSentence',
-      },
-      {
-        title: '查看句子',
-        key: '7',
-        path: '/querySentence',
-      },
-    ],
+    noSubmenu: true,
+    path: '/dailySentence'
   },
 ];
 

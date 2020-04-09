@@ -29,7 +29,12 @@ const config: IConfig = {
           title: '查看博客',
           path: '/queryBlog',
           component: '../pages/viewBlog/index',
-        }
+        },
+        {
+          title: '每日一句',
+          path: '/dailySentence',
+          component: '../pages/dailySentence/index',
+        },
       ],
     },
     // ...routes,

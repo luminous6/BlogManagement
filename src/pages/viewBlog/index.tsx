@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './index.less';
 import { queryBlog, delBlogById } from '@/utils/api';
-import { Table, Tag, Button, Modal, message } from 'antd';
+import { Table, Tag, Button, Modal, message, Spin } from 'antd';
 import { getRandomColor, transformTime } from '@/utils/util';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { confirm } = Modal;
 
 export default function index() {
   const [blogData, setBlogData] = useState([]);
+  const [loadding, setLoading] = useState<boolean>(true);
   const columns = [
     {
       title: '博客标题',
@@ -91,6 +92,7 @@ export default function index() {
   const fetchData = async () => {
     const ret = await queryBlog();
     setBlogData(ret.data);
+    setLoading(false);
   };
   // 删除博客
   const handleClickDelBlog = (id: string | number) => {
@@ -102,7 +104,7 @@ export default function index() {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        delBlogById(id).then((res) => {
+        delBlogById(id).then(res => {
           if (res.status === 200) {
             message.success('删除博客成功！');
             const temp = blogData.filter((item: any, index: number) => item.id !== id);
@@ -120,7 +122,15 @@ export default function index() {
   return (
     <div className={styles[`view-blog-page`]}>
       {console.log('fuck', blogData)}
-      <Table columns={columns} dataSource={blogData} />
+
+      <div style={{ display: loadding ? 'block' : 'none' }} className={styles.loading}>
+        <Spin size="large" />
+      </div>
+      <Table
+        style={{ display: loadding ? 'none' : 'block' }}
+        columns={columns}
+        dataSource={blogData}
+      />
     </div>
   );
 }
