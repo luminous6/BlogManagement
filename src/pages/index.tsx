@@ -8,11 +8,8 @@ export default function() {
   }
   return (
     <div className={styles.normal}>
-      <ul className={styles.list}>
-        <Button type="primary">Primary </Button>
-        <Checkbox onChange={onChange}>Checkbox</Checkbox>
-        <DatePicker onChange={onChange}  />
-      </ul>
+      <h2>今天也是元气满满的一天</h2>
+
     </div>
   );
 }

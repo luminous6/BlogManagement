@@ -36,3 +36,9 @@ export const delSentenceById = async (id: string | number) => {
   console.log(ret);
   return ret;
 };
+// 新增句子
+export const addDailySentence = async (content: string, author: string) => {
+  const ret = await request.get(`/addSentence?content=${content}&author=${author}`);
+  console.log(ret);
+  return ret;
+};

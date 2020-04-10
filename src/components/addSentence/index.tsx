@@ -1,47 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.less';
-import { Form, Input, InputNumber, Button } from 'antd';
-
+import { Input, Button, Space, message } from 'antd';
+import { addDailySentence } from '@/utils/api';
 
 export default function index() {
-  const layout = {
-  labelCol: { span: 2 },
-  wrapperCol: { span: 10},
-};
-const validateMessages = {
-  required: '${label} is required!',
-  types: {
-    email: '${label} is not validate email!',
-    number: '${label} is not a validate number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },
-};
-const onFinish = (values: any) => {
-    console.log(values);
+  const [content, setContent] = useState<string>('');
+  const [author, setAuthor] = useState<string>('匿名');
+
+  const handleClickSubmit = async () => {
+    if (content === '') {
+      message.warning('新增的句子不能为空！');
+      return;
+    }
+    const ret = await addDailySentence(content, author);
+    if (ret.status === 200) {
+      message.success('上传句子成功！');
+      setContent('');
+      setAuthor('');
+    } else {
+      message.error('上传句子失败！');
+    }
   };
   return (
     <div className={styles[`add-sentence-cmp`]}>
       <h3>添加句子</h3>
-      <Form
-        {...layout}
-        name="nest-messages"
-        onFinish={onFinish}
-        validateMessages={validateMessages}
-      >
-        <Form.Item name={['user', 'name']} label="名句" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item name={['user', 'email']} label="作者" rules={[{ type: 'email' }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      <Space size="large">
+        <div>
+          <span>句子：</span>
+          <Input
+            onChange={(val: any) => {
+              setContent(val.target.value);
+            }}
+            style={{ width: '500px' }}
+            placeholder="今天也是元气满满的一天"
+          ></Input>
+        </div>
+
+        <div>
+          <span>作者：</span>
+          <Input
+            onChange={(val: any) => {
+              setAuthor(val.target.value);
+            }}
+            style={{ width: '150px' }}
+            placeholder="匿名"
+          ></Input>
+        </div>
+
+        <Button type="primary" onClick={handleClickSubmit}>
+          上传
+        </Button>
+      </Space>
     </div>
   );
 }
