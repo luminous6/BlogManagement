@@ -1,7 +1,7 @@
 import { extend } from "umi-request";
 import { message } from 'antd';
 const request = extend({
-  prefix: 'http://127.0.0.1:8000/api',
+  prefix: '/api',
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
