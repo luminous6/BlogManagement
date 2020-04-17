@@ -42,3 +42,9 @@ export const addDailySentence = async (content: string, author: string) => {
   console.log(ret);
   return ret;
 };
+// 修改每日一句
+export const updatedSentence = async (id: string, content: string, author: string) => {
+  const ret = await request.get(`/updateSentence?id=${id}&content=${content}&author=${author}`);
+  console.log(ret);
+  return ret;
+}

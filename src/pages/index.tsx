@@ -9,7 +9,7 @@ export default function() {
   return (
     <div className={styles.normal}>
       <h2>今天也是元气满满的一天</h2>
-
+      {console.log(process.env.NODE_ENV)}
     </div>
   );
 }

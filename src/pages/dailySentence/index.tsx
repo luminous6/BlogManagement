@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
-import { Table, Tag, Button, Modal, message, Spin, Form, Input, InputNumber } from 'antd';
-import { queryAllDailySentence, delSentenceById } from '@/utils/api';
+import { Table, Tag, Button, Modal, message, Spin, Form, Input } from 'antd';
+import { queryAllDailySentence, delSentenceById, updatedSentence } from '@/utils/api';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AddSentence from '@/components/addSentence';
 const { confirm } = Modal;
@@ -46,8 +46,9 @@ export default function index() {
             type="primary"
             onClick={() => {
               setVisible(true);
-              setTempSentence(null);
               setTempSentence(text);
+              console.log('temp ', tempSentence);
+
             }}
           >
             编辑
@@ -123,7 +124,22 @@ export default function index() {
     });
   };
   // 确认修改
-  const handleClickModification = () => {};
+  const handleClickModification = () => {
+    console.log(tempSentence);
+    if (tempSentence.content === '') {
+      return message.warn('句子不能为空');
+    }
+    updatedSentence(tempSentence.id, tempSentence.content, tempSentence.author || '匿名').then(
+      (res: any) => {
+        if (res.status === 200) {
+          message.success('修改句子成功');
+          setVisible(false);
+        } else {
+          message.error('修改句子失败');
+        }
+      },
+    );
+  };
   const handleClickCancel = () => {
     setVisible(false);
   };
@@ -155,29 +171,20 @@ export default function index() {
           okText="提交修改"
           cancelText="取消"
         >
-          <Form
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 16 }}
-            name="nest-messages"
-            // onFinish={onFinish}
-            // validateMessages={validateMessages}
-          >
-            <Form.Item label="内容" required>
-              <Input
-                defaultValue={tempSentence.content ? tempSentence.content : ''}
-                value={tempSentence.content}
-              />
-            </Form.Item>
-            <Form.Item label="作者">
-              <Input
-                defaultValue={tempSentence.author ? tempSentence.author : ''}
-                value={tempSentence.author}
-                onChange={() => {
-                  console.log(tempSentence.author);
-                }}
-              />
-            </Form.Item>
-          </Form>
+          句子：
+          <Input
+            defaultValue={tempSentence.content}
+            onChange={val => {
+              setTempSentence(Object.assign(tempSentence, { content: val.target.value }));
+            }}
+          />
+          作者：
+          <Input
+            defaultValue={tempSentence.author}
+            onChange={val => {
+              setTempSentence(Object.assign(tempSentence, { author: val.target.value }));
+            }}
+          />
         </Modal>
       </div>
     </div>
