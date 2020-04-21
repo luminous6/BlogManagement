@@ -48,7 +48,6 @@ export default function index() {
               setVisible(true);
               setTempSentence(text);
               console.log('temp ', tempSentence);
-
             }}
           >
             编辑
@@ -92,7 +91,12 @@ export default function index() {
   // 请求数据
   const fetchData = async () => {
     const res = await queryAllDailySentence();
-    setSentenceData(res.data);
+    if(!res) return;
+    try {
+      setSentenceData(res.data);
+    } catch (error) {
+      throw error;
+    }
     setTimeout(() => {
       setLoading(false);
     }, 300);

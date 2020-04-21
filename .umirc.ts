@@ -6,6 +6,13 @@ const config: IConfig = {
   treeShaking: true,
   routes: [
     {
+      path: '/login',
+      title: '博客登录',
+      exact: true,
+      component: '../pages/login/index',
+    },
+
+    {
       path: '/',
       component: '../layouts/index',
       title: '博客管理',

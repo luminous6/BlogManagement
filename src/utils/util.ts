@@ -15,3 +15,14 @@ export const transformTime = (time: any = +new Date()): string => {
     .replace('T', ' ')
     .replace(/-/g, '.');
 };
+
+// 保存token localStorage
+export const saveToken = (data: any) => {
+  // { token: '' }
+  localStorage.setItem('token', data.token);
+};
+
+// localStorage remove item
+export const removeLocalStorageItem = (item: string) => {
+  localStorage.removeItem(item);
+};

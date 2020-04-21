@@ -1,5 +1,15 @@
 import { request } from './http';
 
+// 登录
+export const userLogin = async (data: any) => {
+  const ret = await request('/login', {
+    method: 'post',
+    data,
+  });
+  console.log(ret);
+  return ret;
+};
+
 // 查询博客
 export const queryBlog = async () => {
   const ret = await request.get('/queryAllBlog');
@@ -47,4 +57,4 @@ export const updatedSentence = async (id: string, content: string, author: strin
   const ret = await request.get(`/updateSentence?id=${id}&content=${content}&author=${author}`);
   console.log(ret);
   return ret;
-}
+};
