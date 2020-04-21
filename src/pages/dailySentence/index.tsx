@@ -164,6 +164,7 @@ export default function index() {
           style={{ display: loadding ? 'none' : 'block' }}
           columns={columns}
           dataSource={sentenceData}
+          rowKey={record => record.id}
         />
       </div>
       <div>

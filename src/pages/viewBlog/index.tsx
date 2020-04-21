@@ -157,6 +157,7 @@ export default function index() {
         style={{ display: loadding ? 'none' : 'block' }}
         columns={columns}
         dataSource={blogData}
+        rowKey={record => record.id}
       />
 
       <ViewBlogDetail blogData={detailData} />
