@@ -4,7 +4,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import { GithubOutlined, DownOutlined } from '@ant-design/icons';
 import router from 'umi/router';
 import layoutsData from './data';
-
+import HeaderCmp from '@/components/header';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -54,7 +54,9 @@ const BasicLayout: React.FC = props => {
         </Sider>
 
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0,background:'#fff' }} />
+          <Header className="site-layout-background" style={{ padding: 0, background: '#fff' }}>
+            <HeaderCmp />
+          </Header>
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>

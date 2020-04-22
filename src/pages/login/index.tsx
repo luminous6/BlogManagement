@@ -66,7 +66,7 @@ const Demo = () => {
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Log in
         </Button>
       </Form.Item>
     </Form>
