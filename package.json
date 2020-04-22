@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.5",
     "antd": "^4.1.1",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "express": "^4.17.1",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",

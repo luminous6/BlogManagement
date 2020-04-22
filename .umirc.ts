@@ -3,6 +3,7 @@ import { IConfig } from 'umi-types';
 
 // ref: https://umijs.org/config/
 const config: IConfig = {
+  // favicon: '/assets/favicon.ico',
   treeShaking: true,
   routes: [
     {
@@ -73,6 +74,7 @@ const config: IConfig = {
       },
     ],
   ],
+  extraBabelPlugins: [['transform-remove-console', { exclude: ['error', 'warn'] }]],
   proxy: {
     '/api': {
       target: 'http://127.0.0.1:7001',
