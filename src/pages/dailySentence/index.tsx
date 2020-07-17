@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AddSentence from '@/components/addSentence';
 const { confirm } = Modal;
 export default function index() {
-  const [sentenceData, setSentenceData] = useState([]);
+  const [sentenceData, setSentenceData] = useState<any[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [loadding, setLoading] = useState<boolean>(true);
   // 修改句子时的数据
@@ -91,7 +91,7 @@ export default function index() {
   // 请求数据
   const fetchData = async () => {
     const res = await queryAllDailySentence();
-    if(!res) return;
+    if (!res) return;
     try {
       setSentenceData(res.data);
     } catch (error) {
@@ -137,7 +137,16 @@ export default function index() {
       (res: any) => {
         if (res.status === 200) {
           message.success('修改句子成功');
+          const data = sentenceData.map((item: any) => {
+            if(item.id === tempSentence.id) {
+              return tempSentence;
+            }else {
+              return item;
+            }
+          })
+          setSentenceData(data);
           setVisible(false);
+          setTempSentence({});
         } else {
           message.error('修改句子失败');
         }
@@ -145,6 +154,7 @@ export default function index() {
     );
   };
   const handleClickCancel = () => {
+    setTempSentence({});
     setVisible(false);
   };
 
@@ -178,16 +188,16 @@ export default function index() {
         >
           句子：
           <Input
-            defaultValue={tempSentence.content}
+            value={tempSentence.content}
             onChange={val => {
-              setTempSentence(Object.assign(tempSentence, { content: val.target.value }));
+              setTempSentence({ ...tempSentence, content: val.target.value });
             }}
           />
           作者：
           <Input
-            defaultValue={tempSentence.author}
+            value={tempSentence.author}
             onChange={val => {
-              setTempSentence(Object.assign(tempSentence, { author: val.target.value }));
+              setTempSentence({ ...tempSentence, author: val.target.value });
             }}
           />
         </Modal>

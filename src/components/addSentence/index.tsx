@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
+import { useHistory } from 'react-router-dom';
 import { Input, Button, Space, message } from 'antd';
 import { addDailySentence } from '@/utils/api';
 
 export default function index() {
   const [content, setContent] = useState<string>('');
   const [author, setAuthor] = useState<string>('匿名');
-
+  const history = useHistory()
   const handleClickSubmit = async () => {
     if (content === '') {
       message.warning('新增的句子不能为空！');
@@ -17,6 +18,7 @@ export default function index() {
       message.success('上传句子成功！');
       setContent('');
       setAuthor('');
+      history.go(0);
     } else {
       message.error('上传句子失败！');
     }
@@ -31,6 +33,7 @@ export default function index() {
             onChange={(val: any) => {
               setContent(val.target.value);
             }}
+            value={content}
             style={{ width: '500px' }}
             placeholder="今天也是元气满满的一天"
           ></Input>
@@ -42,6 +45,7 @@ export default function index() {
             onChange={(val: any) => {
               setAuthor(val.target.value);
             }}
+            value={author}
             style={{ width: '150px' }}
             placeholder="匿名"
           ></Input>
